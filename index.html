@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lapbook interactivo: HTML, SQLite y PostgreSQL</title>
+    <style>
+        :root {
+            --bg-color: #1e1e2e;
+            --card-bg: #2b2b3d;
+            --accent-html: #e44d26;
+            --accent-sqlite: #003b57;
+            --accent-postgres: #336791;
+            --text-color: #e0e0e0;
+            --text-muted: #a0a0b0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            color: #ffffff;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        /* Contenedor principal de la Lapbook (Carpeta Abierta) */
+        .lapbook-container {
+            width: 100%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        /* Sección/Pestaña principal */
+        .lapbook-section {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.4);
+            border-top: 6px solid #ccc;
+        }
+
+        .sec-html { border-color: var(--accent-html); }
+        .sec-sqlite { border-color: var(--accent-sqlite); }
+        .sec-postgres { border-color: var(--accent-postgres); }
+
+        .lapbook-section h2 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Estilos interactivos desplegables (Flaps / Pestañas de la Lapbook) */
+        details {
+            background-color: rgba(255, 255, 255, 0.05);
+            margin-bottom: 12px;
+            border-radius: 6px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        details[open] {
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        summary {
+            padding: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            user-select: none;
+            outline: none;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '►';
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(90deg);
+        }
+
+        .flap-content {
+            padding: 12px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95em;
+            line-height: 1.5;
+        }
+
+        pre {
+            background-color: #181825;
+            padding: 10px;
+            border-radius: 6px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', monospace;
+            font-size: 0.9em;
+            color: #a6e3a1;
+        }
+
+        code {
+            font-family: 'Consolas', 'Courier New', monospace;
+            background-color: #181825;
+            padding: 2px 5px;
+            border-radius: 4px;
+            color: #f9e2af;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-right: 5px;
+        }
+
+        .tag-frontend { background-color: #e44d26; color: white; }
+        .tag-embedded { background-color: #003b57; color: white; }
+        .tag-server { background-color: #336791; color: white; }
+    </style>
+</head>
+<body>
+
+    <h1>Lapbook interactivo de desarrollo web & bases de datos</h1>
+    <p class="subtitle">Despliega cada pestaña para explorar los conceptos clave</p>
+
+    <div class="lapbook-container">
+
+        <!-- SECCIÓN 1: HTML -->
+        <div class="lapbook-section sec-html">
+            <h2><span class="tag tag-frontend">Frontend</span> HTML5</h2>
+            
+            <details open>
+                <summary>📂 ¿Qué es HTML?</summary>
+                <div class="flap-content">
+                    <p><strong>HyperText Markup Language</strong> es el lenguaje estándar utilizado para estructurar el contenido de una página web mediante etiquetas.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>📂 Estructura básica</summary>
+                <div class="flap-content">
+                    <pre><code>&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;Título&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hola Mundo&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                </div>
+            </details>
+
+            <details>
+                <summary>📂 Elementos y Formularios</summary>
+                <div class="flap-content">
+                    <p>HTML permite capturar datos del usuario que luego se pueden almacenar en bases de datos mediante etiquetas como <code>&lt;form&gt;</code>, <code>&lt;input&gt;</code>, <code>&lt;select&gt;</code> y <code>&lt;button&gt;</code>.</p>
+                </div>
+            </details>
+        </div>
+
+        <!-- SECCIÓN 2: SQLITE -->
+        <div class="lapbook-section sec-sqlite">
+            <h2><span class="tag tag-embedded">BD Local</span> SQLite</h2>
+            
+            <details open>
+                <summary>📂 ¿Qué es SQLite?</summary>
+                <div class="flap-content">
+                    <p>Es un motor de base de datos relacional ligero, basado en archivos y que <strong>no requiere un servidor</strong> independiente. Se integra directamente en la aplicación.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>📂 Características principales</summary>
+                <div class="flap-content">
+                    <ul>
+                        <li>Sin configuración (Serverless).</li>
+                        <li>Almacena toda la base de datos en un solo archivo plano (ej. <code>database.db</code>).</li>
+                        <li>Ideal para aplicaciones móviles, prototipos y desarrollo escolar o local.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>📂 Consulta rápida SQL</summary>
+                <div class="flap-content">
+                    <pre><code>CREATE TABLE usuarios (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nombre TEXT NOT NULL
+);</code></pre>
+                </div>
+            </details>
+        </div>
+
+        <!-- SECCIÓN 3: POSTGRESQL -->
+        <div class="lapbook-section sec-postgres">
+            <h2><span class="tag tag-server">BD Servidor</span> PostgreSQL</h2>
+            
+            <details open>
+                <summary>📂 ¿Qué es PostgreSQL?</summary>
+                <div class="flap-content">
+                    <p>Es un sistema de gestión de bases de datos relacionales cliente-servidor, de código abierto, potente y enfocado en la concurrencia y extensibilidad.</p>
+                </div>
+            </details>
+
+            <details>
+                <summary>📂 Características principales</summary>
+                <div class="flap-content">
+                    <ul>
+                        <li>Arquitectura Cliente-Servidor (requiere servicio activo).</li>
+                        <li>Soporte avanzado para JSON, arrays y tipos de datos complejos.</li>
+                        <li>Diseñado para grandes volúmenes de datos y alta concurrencia.</li>
+                    </ul>
+                </div>
+            </details>
+
+            <details>
+                <summary>📂 Consulta rápida SQL</summary>
+                <div class="flap-content">
+                    <pre><code>CREATE TABLE usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    creado_en TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);</code></pre>
+                </div>
+            </details>
+        </div>
+
+    </div>
+
+</body>
+</html>
